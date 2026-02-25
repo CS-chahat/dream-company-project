@@ -1,0 +1,1975 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deloitte — Global Consulting Firm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─── CSS Variables ─────────────────────────────── */
+      :root {
+        --bg: #0d0f14;
+        --bg2: #13161e;
+        --bg3: #1a1d28;
+        --gold: #86bc25;
+        --gold-lt: #a8d44e;
+        --gold-dk: #5e8a10;
+        --text: #e8e8e8;
+        --text-muted: #8a8a8a;
+        --white: #f5f5f5;
+        --line: rgba(134, 188, 37, 0.18);
+        --serif: "Cormorant Garamond", Georgia, serif;
+        --sans: "DM Sans", sans-serif;
+        --trans: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* ─── Reset ─────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-weight: 300;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      ul {
+        list-style: none;
+      }
+
+      /* ─── Page sections (CSS tab trick) ─────────────── */
+      .page {
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      .page:target,
+      #home:target ~ .page#home,
+      body:not(:has(:target)) #home {
+        display: block;
+      }
+
+      /* Fallback: show home by default if no hash */
+      #home {
+        display: block;
+      }
+      #about:target {
+        display: block;
+      }
+      #contact:target {
+        display: block;
+      }
+      #about:target ~ #home,
+      #contact:target ~ #home,
+      #contact:target ~ #about {
+        display: none;
+      }
+
+      /* Simpler approach: use :target on sections */
+      section.pg {
+        display: none;
+      }
+      section.pg:target {
+        display: block;
+      }
+      /* Home visible by default */
+      section#home {
+        display: block;
+      }
+      section#about:target ~ section#home {
+        display: none !important;
+      }
+      section#contact:target ~ section#home {
+        display: none !important;
+      }
+      section#contact:target ~ section#about {
+        display: none;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ─── Noise texture overlay ──────────────────────── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        opacity: 0.025;
+        pointer-events: none;
+      }
+
+      /* ─── NAV ────────────────────────────────────────── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5vw;
+        height: 72px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(13, 15, 20, 0.88);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        line-height: 1;
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+        font-weight: 400;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        position: relative;
+        transition: color var(--trans);
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--trans);
+      }
+      .nav-links a:hover {
+        color: var(--gold-lt);
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+      .nav-cta {
+        padding: 0.5rem 1.4rem;
+        border: 1px solid var(--gold);
+        color: var(--gold) !important;
+        font-size: 0.75rem !important;
+        letter-spacing: 0.16em !important;
+        transition:
+          background var(--trans),
+          color var(--trans) !important;
+      }
+      .nav-cta::after {
+        display: none !important;
+      }
+      .nav-cta:hover {
+        background: var(--gold) !important;
+        color: var(--bg) !important;
+      }
+
+      /* Hamburger */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .hamburger span {
+        width: 24px;
+        height: 1.5px;
+        background: var(--text);
+        display: block;
+        transition: var(--trans);
+      }
+      .mobile-menu {
+        display: none;
+      }
+
+      /* ─── MAIN WRAPPER ───────────────────────────────── */
+      main {
+        padding-top: 72px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ══════════════════════════════════════════════════
+       HOME PAGE
+    ══════════════════════════════════════════════════ */
+
+      /* Hero */
+      .hero {
+        min-height: calc(100vh - 72px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 5vw;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 70% 50%,
+            rgba(134, 188, 37, 0.07) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 40% 80% at 10% 80%,
+            rgba(134, 188, 37, 0.04) 0%,
+            transparent 60%
+          );
+      }
+      .hero-line {
+        position: absolute;
+        top: 0;
+        left: 5vw;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        opacity: 0.18;
+      }
+      .hero-eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+        animation: fadeIn 0.6s ease 0.1s both;
+      }
+      .hero-title {
+        font-family: var(--serif);
+        font-size: clamp(3rem, 7vw, 6.5rem);
+        font-weight: 300;
+        line-height: 1.08;
+        color: var(--white);
+        max-width: 800px;
+        animation: fadeIn 0.6s ease 0.2s both;
+      }
+      .hero-title em {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .hero-sub {
+        margin-top: 2rem;
+        max-width: 480px;
+        font-size: 1rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        animation: fadeIn 0.6s ease 0.3s both;
+      }
+      .hero-actions {
+        margin-top: 3rem;
+        display: flex;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+        animation: fadeIn 0.6s ease 0.4s both;
+      }
+      .btn-primary {
+        padding: 0.85rem 2.2rem;
+        background: var(--gold);
+        color: var(--bg);
+        font-family: var(--sans);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        transition:
+          background var(--trans),
+          transform var(--trans);
+        display: inline-block;
+      }
+      .btn-primary:hover {
+        background: var(--gold-lt);
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        padding: 0.85rem 2.2rem;
+        background: transparent;
+        color: var(--text);
+        font-size: 0.78rem;
+        font-weight: 400;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        border: 1px solid var(--line);
+        cursor: pointer;
+        transition:
+          border-color var(--trans),
+          color var(--trans),
+          transform var(--trans);
+        display: inline-block;
+      }
+      .btn-outline:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-2px);
+      }
+
+      .hero-scroll {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 5vw;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        animation: fadeIn 0.6s ease 0.6s both;
+      }
+      .hero-scroll-line {
+        width: 40px;
+        height: 1px;
+        background: var(--gold-dk);
+        animation: expandLine 1.2s ease 0.8s both;
+      }
+      @keyframes expandLine {
+        from {
+          width: 0;
+        }
+        to {
+          width: 40px;
+        }
+      }
+
+      .hero-stats {
+        position: absolute;
+        bottom: 2.5rem;
+        right: 5vw;
+        display: flex;
+        gap: 3rem;
+        animation: fadeIn 0.6s ease 0.5s both;
+      }
+      .stat-item {
+        text-align: right;
+      }
+      .stat-num {
+        font-family: var(--serif);
+        font-size: 2.2rem;
+        font-weight: 300;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-top: 0.25rem;
+      }
+
+      /* Services Strip */
+      .services-strip {
+        background: var(--bg2);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 5rem 5vw;
+      }
+      .section-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 3rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        max-width: 60px;
+        height: 1px;
+        background: var(--gold);
+        opacity: 0.4;
+      }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 2px;
+      }
+      .service-card {
+        padding: 2.5rem 2rem;
+        border: 1px solid var(--line);
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color var(--trans),
+          background var(--trans);
+      }
+      .service-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--trans);
+      }
+      .service-card:hover {
+        border-color: rgba(134, 188, 37, 0.35);
+        background: rgba(134, 188, 37, 0.03);
+      }
+      .service-card:hover::before {
+        transform: scaleX(1);
+      }
+      .service-num {
+        font-family: var(--serif);
+        font-size: 0.9rem;
+        color: var(--gold-dk);
+        margin-bottom: 1.5rem;
+      }
+      .service-title {
+        font-family: var(--serif);
+        font-size: 1.45rem;
+        font-weight: 400;
+        color: var(--white);
+        margin-bottom: 0.75rem;
+        line-height: 1.25;
+      }
+      .service-desc {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.75;
+      }
+
+      /* Marquee */
+      .marquee-wrap {
+        padding: 1.5rem 0;
+        overflow: hidden;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+      }
+      .marquee-track {
+        display: flex;
+        gap: 3rem;
+        width: max-content;
+        animation: marquee 28s linear infinite;
+      }
+      .marquee-track:hover {
+        animation-play-state: paused;
+      }
+      .marquee-item {
+        font-family: var(--serif);
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--text-muted);
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+      }
+      .marquee-item::after {
+        content: "·";
+        color: var(--gold);
+        font-style: normal;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* Feature Section */
+      .feature-section {
+        padding: 8rem 5vw;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+      .feature-img-wrap {
+        position: relative;
+      }
+      .feature-img-placeholder {
+        width: 100%;
+        aspect-ratio: 4/5;
+        background: var(--bg3);
+        border: 1px solid var(--line);
+        position: relative;
+        overflow: hidden;
+      }
+      .feature-img-placeholder::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(135deg, rgba(134, 188, 37, 0.06) 0%, transparent 50%),
+          repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 20px,
+            rgba(134, 188, 37, 0.03) 20px,
+            rgba(134, 188, 37, 0.03) 21px
+          );
+      }
+      .feature-img-badge {
+        position: absolute;
+        bottom: -1.5rem;
+        right: -1.5rem;
+        background: var(--gold);
+        color: var(--bg);
+        padding: 1.5rem;
+        font-family: var(--serif);
+        font-size: 2.8rem;
+        font-weight: 300;
+        line-height: 1;
+      }
+      .feature-img-badge small {
+        display: block;
+        font-family: var(--sans);
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-top: 0.25rem;
+        color: rgba(13, 15, 20, 0.7);
+      }
+      .feature-content h2 {
+        font-family: var(--serif);
+        font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+        font-weight: 300;
+        line-height: 1.2;
+        color: var(--white);
+        margin-bottom: 1.5rem;
+      }
+      .feature-content h2 em {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .feature-content p {
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        line-height: 1.85;
+        margin-bottom: 1rem;
+      }
+      .feature-list {
+        margin: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.85rem;
+        color: var(--text);
+      }
+      .feature-list li::before {
+        content: "";
+        width: 20px;
+        height: 1px;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
+
+      /* Testimonial */
+      .testimonial-section {
+        background: var(--bg2);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 8rem 5vw;
+        text-align: center;
+      }
+      .testimonial-quote {
+        font-family: var(--serif);
+        font-size: clamp(1.6rem, 3vw, 2.6rem);
+        font-weight: 300;
+        font-style: italic;
+        color: var(--white);
+        max-width: 850px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.4;
+      }
+      .testimonial-quote::before {
+        content: "\201C";
+        color: var(--gold);
+      }
+      .testimonial-quote::after {
+        content: "\201D";
+        color: var(--gold);
+      }
+      .testimonial-author {
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .testimonial-author span {
+        color: var(--gold);
+      }
+
+      /* Industries */
+      .industries-section {
+        padding: 8rem 5vw;
+      }
+      .industries-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 4rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .industries-header h2 {
+        font-family: var(--serif);
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 300;
+        color: var(--white);
+        max-width: 420px;
+        line-height: 1.2;
+      }
+      .industries-header p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        max-width: 340px;
+        line-height: 1.8;
+      }
+      .industries-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1px;
+        border: 1px solid var(--line);
+      }
+      .industry-item {
+        padding: 2rem 1.5rem;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        transition: background var(--trans);
+        cursor: default;
+      }
+      .industry-item:hover {
+        background: rgba(134, 188, 37, 0.04);
+      }
+      .industry-icon {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .industry-name {
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text);
+        font-weight: 400;
+      }
+
+      /* ══════════════════════════════════════════════════
+       ABOUT PAGE
+    ══════════════════════════════════════════════════ */
+      .about-hero {
+        padding: 8rem 5vw 6rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .about-hero-bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 60% 70% at 90% 30%,
+          rgba(134, 188, 37, 0.06) 0%,
+          transparent 65%
+        );
+      }
+      .about-hero-tag {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+      }
+      .about-hero h1 {
+        font-family: var(--serif);
+        font-size: clamp(3rem, 6vw, 5.5rem);
+        font-weight: 300;
+        color: var(--white);
+        line-height: 1.1;
+        max-width: 720px;
+        margin-bottom: 2.5rem;
+      }
+      .about-hero h1 em {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .about-hero-body {
+        max-width: 600px;
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        line-height: 1.9;
+      }
+
+      .about-mission {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .about-mission-left {
+        padding: 6rem 5vw;
+        background: var(--bg2);
+        border-right: 1px solid var(--line);
+      }
+      .about-mission-right {
+        padding: 6rem 5vw;
+        background: var(--bg);
+      }
+      .mission-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2rem;
+      }
+      .mission-text {
+        font-family: var(--serif);
+        font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+        font-weight: 300;
+        color: var(--white);
+        line-height: 1.45;
+      }
+      .value-item {
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .value-item:last-child {
+        border-bottom: none;
+      }
+      .value-item h4 {
+        font-family: var(--serif);
+        font-size: 1.25rem;
+        font-weight: 400;
+        color: var(--white);
+        margin-bottom: 0.4rem;
+      }
+      .value-item p {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        line-height: 1.75;
+      }
+
+      /* Leadership */
+      .leadership-section {
+        padding: 8rem 5vw;
+      }
+      .leadership-section h2 {
+        font-family: var(--serif);
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 300;
+        color: var(--white);
+        margin-bottom: 4rem;
+      }
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 2px;
+      }
+      .team-card {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        transition: border-color var(--trans);
+      }
+      .team-card:hover {
+        border-color: rgba(134, 188, 37, 0.35);
+      }
+      .team-avatar {
+        width: 100%;
+        aspect-ratio: 3/3.5;
+        background: var(--bg3);
+        position: relative;
+        overflow: hidden;
+      }
+      .team-avatar::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          160deg,
+          rgba(134, 188, 37, 0.1) 0%,
+          transparent 60%
+        );
+      }
+      .team-avatar-initials {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--serif);
+        font-size: 4rem;
+        font-weight: 300;
+        color: rgba(134, 188, 37, 0.25);
+      }
+      .team-info {
+        padding: 1.5rem;
+      }
+      .team-name {
+        font-family: var(--serif);
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: var(--white);
+      }
+      .team-role {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-top: 0.25rem;
+      }
+      .team-bio {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.75rem;
+        line-height: 1.7;
+      }
+
+      /* Timeline */
+      .timeline-section {
+        background: var(--bg2);
+        padding: 8rem 5vw;
+        border-top: 1px solid var(--line);
+      }
+      .timeline-section h2 {
+        font-family: var(--serif);
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 300;
+        color: var(--white);
+        margin-bottom: 5rem;
+      }
+      .timeline {
+        position: relative;
+        padding-left: 4rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 1rem;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(to bottom, var(--gold), transparent);
+        opacity: 0.4;
+      }
+      .timeline-entry {
+        position: relative;
+        margin-bottom: 3.5rem;
+      }
+      .timeline-entry::before {
+        content: "";
+        position: absolute;
+        left: -3.25rem;
+        top: 0.4rem;
+        width: 8px;
+        height: 8px;
+        background: var(--gold);
+        border-radius: 50%;
+      }
+      .timeline-year {
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.4rem;
+      }
+      .timeline-title {
+        font-family: var(--serif);
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: var(--white);
+        margin-bottom: 0.4rem;
+      }
+      .timeline-desc {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        line-height: 1.75;
+      }
+
+      /* ══════════════════════════════════════════════════
+       CONTACT PAGE
+    ══════════════════════════════════════════════════ */
+      .contact-hero {
+        padding: 8rem 5vw 5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .contact-hero-bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 50% 80% at 5% 50%,
+          rgba(134, 188, 37, 0.05) 0%,
+          transparent 65%
+        );
+      }
+      .contact-hero-tag {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+      }
+      .contact-hero h1 {
+        font-family: var(--serif);
+        font-size: clamp(3rem, 6vw, 5.5rem);
+        font-weight: 300;
+        color: var(--white);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+      }
+      .contact-hero h1 em {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .contact-hero p {
+        font-size: 1rem;
+        color: var(--text-muted);
+        max-width: 500px;
+        line-height: 1.85;
+      }
+
+      .contact-layout {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        border-top: 1px solid var(--line);
+      }
+      .contact-info {
+        padding: 5rem 5vw;
+        background: var(--bg2);
+        border-right: 1px solid var(--line);
+      }
+      .contact-info-group {
+        margin-bottom: 3rem;
+      }
+      .contact-info-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.75rem;
+      }
+      .contact-info-value {
+        font-family: var(--serif);
+        font-size: 1.25rem;
+        color: var(--white);
+        line-height: 1.6;
+      }
+      .contact-info-sub {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        margin-top: 0.25rem;
+      }
+      .contact-offices {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--line);
+      }
+      .office-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        margin-top: 1rem;
+      }
+      .office-item {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+      }
+      .office-item strong {
+        color: var(--text);
+        font-weight: 400;
+        display: block;
+      }
+
+      .contact-form-wrap {
+        padding: 5rem 5vw;
+      }
+      .contact-form-wrap h3 {
+        font-family: var(--serif);
+        font-size: 1.8rem;
+        font-weight: 300;
+        color: var(--white);
+        margin-bottom: 2.5rem;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+      }
+      .form-group label {
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        background: var(--bg3);
+        border: 1px solid var(--line);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 0.9rem;
+        font-weight: 300;
+        padding: 0.85rem 1rem;
+        width: 100%;
+        outline: none;
+        transition: border-color var(--trans);
+        appearance: none;
+        -webkit-appearance: none;
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: var(--gold);
+      }
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: rgba(138, 133, 128, 0.45);
+      }
+      .form-group select option {
+        background: var(--bg3);
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+      .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+      }
+      .form-check input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-top: 0.2rem;
+        accent-color: var(--gold);
+        cursor: pointer;
+      }
+      .form-check label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        cursor: pointer;
+      }
+      .form-check label a {
+        color: var(--gold);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--bg);
+        border-top: 1px solid var(--line);
+        padding: 5rem 5vw 2.5rem;
+      }
+      .footer-top {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 3rem;
+        padding-bottom: 4rem;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 2rem;
+      }
+      .footer-brand-name {
+        font-family: var(--serif);
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 1rem;
+      }
+      .footer-brand-name span {
+        color: var(--gold);
+      }
+      .footer-brand-desc {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        max-width: 260px;
+      }
+      .footer-col h4 {
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.25rem;
+      }
+      .footer-col ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .footer-col ul li a {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        transition: color var(--trans);
+      }
+      .footer-col ul li a:hover {
+        color: var(--gold-lt);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .footer-copy {
+        font-size: 0.73rem;
+        color: var(--text-muted);
+        letter-spacing: 0.06em;
+      }
+      .footer-copy span {
+        color: var(--gold-dk);
+      }
+      .footer-legal {
+        display: flex;
+        gap: 2rem;
+      }
+      .footer-legal a {
+        font-size: 0.73rem;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        transition: color var(--trans);
+      }
+      .footer-legal a:hover {
+        color: var(--gold);
+      }
+
+      /* ─── RESPONSIVE ─────────────────────────────────── */
+      @media (max-width: 900px) {
+        .hero-stats {
+          display: none;
+        }
+        .feature-section {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .feature-img-badge {
+          bottom: -1rem;
+          right: -1rem;
+        }
+        .about-mission {
+          grid-template-columns: 1fr;
+        }
+        .about-mission-left {
+          border-right: none;
+          border-bottom: 1px solid var(--line);
+        }
+        .contact-layout {
+          grid-template-columns: 1fr;
+        }
+        .contact-info {
+          border-right: none;
+          border-bottom: 1px solid var(--line);
+        }
+        .footer-top {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .hero-title {
+          font-size: clamp(2.4rem, 9vw, 3.5rem);
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .footer-top {
+          grid-template-columns: 1fr;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .industries-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .team-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─── Navigation ─────────────────────────────────────── -->
+    <nav>
+      <a class="nav-logo" href="#home" aria-label="Deloitte Home">
+        <svg
+          width="120"
+          height="26"
+          viewBox="0 0 400 85"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <!-- Deloitte wordmark SVG recreation -->
+          <text
+            x="0"
+            y="70"
+            font-family="Arial, Helvetica, sans-serif"
+            font-size="78"
+            font-weight="700"
+            fill="#ffffff"
+            letter-spacing="-1"
+          >
+            Deloitte
+          </text>
+          <circle cx="382" cy="72" r="12" fill="#86BC25" />
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="nav-cta">Engage Us</a>
+      </div>
+      <div class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <main>
+      <!-- ════════════════════════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════════════════════════ -->
+      <section id="home" class="pg">
+        <!-- Hero -->
+        <div class="hero">
+          <div class="hero-bg"></div>
+          <div class="hero-line"></div>
+          <p class="hero-eyebrow">Global Consulting &amp; Advisory</p>
+          <h1 class="hero-title">
+            Transforming <em>complexity</em><br />into competitive edge.
+          </h1>
+          <p class="hero-sub">
+            Deloitte partners with the world's most ambitious organisations to
+            navigate uncertainty, accelerate growth, and build the capabilities
+            of tomorrow.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary">Start a Conversation</a>
+            <a href="#about" class="btn-outline">Our Approach</a>
+          </div>
+          <div class="hero-scroll">
+            <div class="hero-scroll-line"></div>
+            Explore
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-num">150+</div>
+              <div class="stat-label">Countries</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">$67B</div>
+              <div class="stat-label">Revenue</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">460K</div>
+              <div class="stat-label">Professionals</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div class="services-strip">
+          <div class="section-label">Our Practices</div>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-num">01</div>
+              <h3 class="service-title">Strategy &amp; Corporate Finance</h3>
+              <p class="service-desc">
+                Shaping bold strategies and M&amp;A decisions that unlock
+                long-term enterprise value.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="service-num">02</div>
+              <h3 class="service-title">Technology &amp; Digital</h3>
+              <p class="service-desc">
+                Modernising core platforms and engineering AI-powered operating
+                models at scale.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="service-num">03</div>
+              <h3 class="service-title">Risk &amp; Regulation</h3>
+              <p class="service-desc">
+                Translating regulatory complexity into enterprise resilience and
+                competitive advantage.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="service-num">04</div>
+              <h3 class="service-title">Human Capital</h3>
+              <p class="service-desc">
+                Designing organisations and cultures that attract talent and
+                deliver performance.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="service-num">05</div>
+              <h3 class="service-title">Sustainability</h3>
+              <p class="service-desc">
+                Embedding ESG into strategy to create durable value and meet
+                stakeholder expectations.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="service-num">06</div>
+              <h3 class="service-title">Financial Advisory</h3>
+              <p class="service-desc">
+                Expert guidance across restructuring, transactions, disputes,
+                and forensic matters.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Marquee -->
+        <div class="marquee-wrap">
+          <div class="marquee-track">
+            <span class="marquee-item">Strategy</span>
+            <span class="marquee-item">Digital Transformation</span>
+            <span class="marquee-item">Mergers &amp; Acquisitions</span>
+            <span class="marquee-item">Risk Management</span>
+            <span class="marquee-item">AI &amp; Automation</span>
+            <span class="marquee-item">Sustainability</span>
+            <span class="marquee-item">Talent &amp; Culture</span>
+            <span class="marquee-item">Regulatory Advisory</span>
+            <span class="marquee-item">Strategy</span>
+            <span class="marquee-item">Digital Transformation</span>
+            <span class="marquee-item">Mergers &amp; Acquisitions</span>
+            <span class="marquee-item">Risk Management</span>
+            <span class="marquee-item">AI &amp; Automation</span>
+            <span class="marquee-item">Sustainability</span>
+            <span class="marquee-item">Talent &amp; Culture</span>
+            <span class="marquee-item">Regulatory Advisory</span>
+          </div>
+        </div>
+
+        <!-- Feature -->
+        <div class="feature-section">
+          <div class="feature-img-wrap">
+            <div class="feature-img-placeholder">
+              <div
+                style="
+                  position: absolute;
+                  inset: 0;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  opacity: 0.12;
+                  font-family: var(--serif);
+                  font-size: 8rem;
+                  font-weight: 300;
+                  color: var(--gold);
+                "
+              >
+                D
+              </div>
+              <div class="feature-img-overlay">
+                <img
+                  src="https://images.unsplash.com/photo-1763933356190-6e86bb9faad8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGVsb2l0dGUlMjBsb2dvfGVufDB8fDB8fHww"
+                  alt="Deloitte Team"
+                  style="
+                    width: 100%;
+                    height: 850px;
+                    object-fit: cover;
+                    filter: brightness(0.7);
+                  "
+                />
+              </div>
+            </div>
+            <div class="feature-img-badge">
+              175<sup
+                style="font-size: 0.4em; vertical-align: top; margin-top: 0.4em"
+                >+</sup
+              >
+              <small>Years of Excellence</small>
+            </div>
+          </div>
+          <div class="feature-content">
+            <div class="section-label">Why Deloitte</div>
+            <h2>Where <em>insight</em> meets<br />decisive action.</h2>
+            <p>
+              We don't deliver reports — we deliver results. Our teams embed
+              alongside yours, bringing deep industry expertise and a relentless
+              focus on execution that outlasts the engagement.
+            </p>
+            <p>
+              Every assignment begins with one question: what does success truly
+              look like for you? From there, we build with clarity, speed, and
+              conviction.
+            </p>
+            <ul class="feature-list">
+              <li>Proprietary data and research capabilities</li>
+              <li>Cross-functional, integrated delivery teams</li>
+              <li>Outcome-based fee structures available</li>
+              <li>Sustained impact beyond project closure</li>
+            </ul>
+            <a href="#about" class="btn-outline">Learn More About Us</a>
+          </div>
+        </div>
+
+        <!-- Testimonial -->
+        <div class="testimonial-section">
+          <p class="testimonial-quote">
+            Deloitte brought an intellectual rigour and genuine commercial
+            instinct that changed how we think about our own business. The
+            results speak for themselves.
+          </p>
+          <p class="testimonial-author">
+            Miriam Okonkwo &nbsp;—&nbsp;
+            <span>CEO, Atlas Infrastructure Group</span>
+          </p>
+        </div>
+
+        <!-- Industries -->
+        <div class="industries-section">
+          <div class="industries-header">
+            <h2>Industries We Serve</h2>
+            <p>
+              Deep sector knowledge allows us to move faster and deliver answers
+              that are truly fit for your context.
+            </p>
+          </div>
+          <div class="industries-grid">
+            <div class="industry-item">
+              <div class="industry-icon">🏦</div>
+              <div class="industry-name">Financial Services</div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-icon">⚕️</div>
+              <div class="industry-name">Healthcare &amp; Life Sciences</div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-icon">⚡</div>
+              <div class="industry-name">Energy &amp; Resources</div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-icon">🏭</div>
+              <div class="industry-name">Industrial &amp; Manufacturing</div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-icon">🛍️</div>
+              <div class="industry-name">Consumer &amp; Retail</div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-icon">📡</div>
+              <div class="industry-name">Technology &amp; Media</div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-icon">🏛️</div>
+              <div class="industry-name">Government &amp; Public Sector</div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-icon">✈️</div>
+              <div class="industry-name">Transport &amp; Logistics</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /#home -->
+
+      <!-- ════════════════════════════════════════════════════════
+     ABOUT PAGE
+════════════════════════════════════════════════════════ -->
+      <section id="about" class="pg">
+        <div class="about-hero">
+          <div class="about-hero-bg"></div>
+          <p class="about-hero-tag">Our Story</p>
+          <h1>Built on <em>purpose</em>,<br />driven by people.</h1>
+          <p class="about-hero-body">
+            Founded in 1845 by William Welch Deloitte in London, Deloitte has
+            grown into one of the world's largest professional services
+            networks. Today, our member firms operate in more than 150 countries
+            and territories, delivering audit, consulting, financial advisory,
+            risk advisory, tax, and related services to clients spanning every
+            major industry.
+          </p>
+        </div>
+
+        <div class="about-mission">
+          <div class="about-mission-left">
+            <p class="mission-label">Our Mission</p>
+            <p class="mission-text">
+              "To make a meaningful difference in the organisations we serve —
+              and through them, in the societies they shape."
+            </p>
+          </div>
+          <div class="about-mission-right">
+            <p class="mission-label">Our Values</p>
+            <div class="value-item">
+              <h4>Integrity Without Compromise</h4>
+              <p>
+                We say what we believe, even when it's difficult. Our clients
+                trust us because we've earned it.
+              </p>
+            </div>
+            <div class="value-item">
+              <h4>Intellectual Courage</h4>
+              <p>
+                We challenge assumptions — including our own — to surface the
+                insight that truly matters.
+              </p>
+            </div>
+            <div class="value-item">
+              <h4>Diversity of Thought</h4>
+              <p>
+                The best answers emerge when different perspectives converge. We
+                cultivate that deliberately.
+              </p>
+            </div>
+            <div class="value-item">
+              <h4>Long-Term Partnership</h4>
+              <p>
+                We measure our success by our clients' outcomes, not by the size
+                of our engagements.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Leadership -->
+        <div class="leadership-section">
+          <h2>Global Leadership</h2>
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-avatar">
+                <div class="team-avatar-initials">RK</div>
+              </div>
+              <div class="team-info">
+                <p class="team-name">Rajan Khanna</p>
+                <p class="team-role">Global Managing Partner &amp; CEO</p>
+                <p class="team-bio">
+                  25 years advising Fortune 500 CEOs and sovereign governments
+                  on strategy and transformation. Former McKinsey Partner and
+                  Harvard Business School faculty.
+                </p>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">
+                <div class="team-avatar-initials">SW</div>
+              </div>
+              <div class="team-info">
+                <p class="team-name">Sophia Werner</p>
+                <p class="team-role">Global Head, Technology &amp; Digital</p>
+                <p class="team-bio">
+                  Pioneer in enterprise AI adoption across regulated industries.
+                  Led major digital transformations for European banking and
+                  public sector institutions.
+                </p>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">
+                <div class="team-avatar-initials">MO</div>
+              </div>
+              <div class="team-info">
+                <p class="team-name">Marcus Osei</p>
+                <p class="team-role">Head, Africa &amp; Middle East</p>
+                <p class="team-bio">
+                  A leading authority on emerging market strategy. Has partnered
+                  with heads of state, central banks, and sovereign wealth funds
+                  across three continents.
+                </p>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">
+                <div class="team-avatar-initials">YL</div>
+              </div>
+              <div class="team-info">
+                <p class="team-name">Yuki Laurenz</p>
+                <p class="team-role">Chief People &amp; Culture Officer</p>
+                <p class="team-bio">
+                  Architect of Deloitte's award-winning talent strategy.
+                  Passionate about inclusive leadership, psychological safety,
+                  and building organisations where people do their best work.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline-section">
+          <h2>Our Journey</h2>
+          <div class="timeline">
+            <div class="timeline-entry">
+              <p class="timeline-year">1845 — Founding</p>
+              <p class="timeline-title">
+                William Welch Deloitte establishes the firm in London
+              </p>
+              <p class="timeline-desc">
+                William Welch Deloitte opens his accounting practice at
+                Basinghall Street, London, pioneering the role of the
+                independent auditor at a time when the concept was virtually
+                unknown.
+              </p>
+            </div>
+            <div class="timeline-entry">
+              <p class="timeline-year">1952 — Global Expansion</p>
+              <p class="timeline-title">
+                International network begins to take shape
+              </p>
+              <p class="timeline-desc">
+                Deloitte formalises partnerships across North America, Europe,
+                and Asia Pacific, becoming one of the first truly global
+                professional services firms.
+              </p>
+            </div>
+            <div class="timeline-entry">
+              <p class="timeline-year">1989 — Merger &amp; Scale</p>
+              <p class="timeline-title">
+                Deloitte Haskins &amp; Sells merges with Touche Ross
+              </p>
+              <p class="timeline-desc">
+                The landmark merger creates Deloitte &amp; Touche, significantly
+                expanding global footprint and cementing the firm's position
+                among the world's pre-eminent audit and advisory networks.
+              </p>
+            </div>
+            <div class="timeline-entry">
+              <p class="timeline-year">2012 — Digital Era</p>
+              <p class="timeline-title">Deloitte Digital launched globally</p>
+              <p class="timeline-desc">
+                Recognising the digital transformation wave, Deloitte launches
+                its dedicated digital creative agency and technology practice,
+                now one of the largest digital consultancies in the world.
+              </p>
+            </div>
+            <div class="timeline-entry">
+              <p class="timeline-year">2024 — AI Era</p>
+              <p class="timeline-title">
+                Deloitte AI &amp; Data practice scales to 50,000+ practitioners
+              </p>
+              <p class="timeline-desc">
+                With over $1B invested in AI capabilities and alliances,
+                Deloitte is the leading adviser for responsible enterprise AI
+                adoption, generative AI strategy, and data-driven transformation
+                globally.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /#about -->
+
+      <!-- ════════════════════════════════════════════════════════
+     CONTACT PAGE
+════════════════════════════════════════════════════════ -->
+      <section id="contact" class="pg">
+        <div class="contact-hero">
+          <div class="contact-hero-bg"></div>
+          <p class="contact-hero-tag">Get In Touch</p>
+          <h1>Let's <em>build</em><br />something together.</h1>
+          <p>
+            Tell us about your challenge. Our team will respond within one
+            business day to explore how Deloitte can help.
+          </p>
+        </div>
+
+        <div class="contact-layout">
+          <div class="contact-info">
+            <div class="contact-info-group">
+              <p class="contact-info-label">Global Headquarters</p>
+              <p class="contact-info-value">
+                30 St Mary Axe<br />London EC3A 8EP
+              </p>
+              <p class="contact-info-sub">United Kingdom</p>
+            </div>
+            <div class="contact-info-group">
+              <p class="contact-info-label">New Business Enquiries</p>
+              <p class="contact-info-value">
+                <a
+                  href="/cdn-cgi/l/email-protection"
+                  class="__cf_email__"
+                  data-cfemail="e0858e91958992898593a0968592948598cd81849689938f9299ce838f8d"
+                  >[email&#160;protected]</a
+                >
+              </p>
+              <p class="contact-info-sub">+44 (0)20 7946 0301</p>
+            </div>
+            <div class="contact-info-group">
+              <p class="contact-info-label">Careers</p>
+              <p class="contact-info-value">
+                <a
+                  href="/cdn-cgi/l/email-protection"
+                  class="__cf_email__"
+                  data-cfemail="e397828f868d97a395869197869bce8287958a908c919acd808c8e"
+                  >[email&#160;protected]</a
+                >
+              </p>
+              <p class="contact-info-sub">
+                We hire exceptional people year-round.
+              </p>
+            </div>
+            <div class="contact-offices">
+              <p class="contact-info-label">Other Key Offices</p>
+              <div class="office-list">
+                <div class="office-item">
+                  <strong>New York</strong>1 World Trade Center, Floor 85
+                </div>
+                <div class="office-item">
+                  <strong>Singapore</strong>1 Raffles Quay, North Tower
+                </div>
+                <div class="office-item">
+                  <strong>Dubai</strong>DIFC, Gate Village Building 4
+                </div>
+                <div class="office-item">
+                  <strong>São Paulo</strong>Av. Brigadeiro Faria Lima, 3900
+                </div>
+                <div class="office-item">
+                  <strong>Nairobi</strong>The Prism, Upper Hill
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrap">
+            <h3>Send us a message</h3>
+            <form>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fname">First Name</label>
+                  <input
+                    type="text"
+                    id="fname"
+                    name="fname"
+                    placeholder="Alexandra"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="lname">Last Name</label>
+                  <input
+                    type="text"
+                    id="lname"
+                    name="lname"
+                    placeholder="Sterling"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="a.sterling@company.com"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="phone">Phone (optional)</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="+1 212 555 0100"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="company">Company / Organisation</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  placeholder="Your organisation"
+                />
+              </div>
+              <div class="form-group">
+                <label for="service">Area of Interest</label>
+                <select id="service" name="service">
+                  <option value="" disabled selected>
+                    Select a practice area
+                  </option>
+                  <option>Strategy &amp; Corporate Finance</option>
+                  <option>Technology &amp; Digital</option>
+                  <option>Risk &amp; Regulation</option>
+                  <option>Human Capital</option>
+                  <option>Sustainability</option>
+                  <option>Financial Advisory</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message">Tell us about your challenge</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="Describe the challenge or opportunity you're facing and what outcome you're hoping to achieve..."
+                ></textarea>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" id="consent" name="consent" />
+                <label for="consent">
+                  I agree to Deloitte's
+                  <a href="#contact">Privacy Policy</a> and consent to being
+                  contacted in relation to this enquiry. I understand I can
+                  withdraw consent at any time.
+                </label>
+              </div>
+              <button
+                type="submit"
+                class="btn-primary"
+                style="width: 100%; justify-content: center"
+              >
+                Submit Enquiry
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <!-- /#contact -->
+    </main>
+
+    <!-- ─── Footer ────────────────────────────────────────────── -->
+    <footer>
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-name">
+            <svg
+              width="130"
+              height="28"
+              viewBox="0 0 400 85"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-label="Deloitte"
+            >
+              <text
+                x="0"
+                y="70"
+                font-family="Arial, Helvetica, sans-serif"
+                font-size="78"
+                font-weight="700"
+                fill="#ffffff"
+                letter-spacing="-1"
+              >
+                Deloitte
+              </text>
+              <circle cx="382" cy="72" r="12" fill="#86BC25" />
+            </svg>
+          </div>
+          <p class="footer-brand-desc">
+            A global consulting and advisory firm committed to delivering
+            lasting impact for the world's most consequential organisations.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#home">Strategy</a></li>
+            <li><a href="#home">Technology</a></li>
+            <li><a href="#home">Risk &amp; Regulation</a></li>
+            <li><a href="#home">Human Capital</a></li>
+            <li><a href="#home">Sustainability</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#about">Leadership</a></li>
+            <li><a href="#about">Our History</a></li>
+            <li><a href="#contact">Careers</a></li>
+            <li><a href="#contact">Press</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#contact">LinkedIn</a></li>
+            <li><a href="#contact">Twitter / X</a></li>
+            <li><a href="#contact">Insights Blog</a></li>
+            <li><a href="#contact">Podcast</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          © 2025 Deloitte Touche Tohmatsu Limited. All rights reserved.
+          <span
+            >Deloitte refers to one or more of the member firms of DTTL.</span
+          >
+        </p>
+        <div class="footer-legal">
+          <a href="#home">Privacy Policy</a>
+          <a href="#home">Cookie Settings</a>
+          <a href="#home">Legal Notices</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
